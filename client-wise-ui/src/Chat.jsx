@@ -141,11 +141,17 @@ export default function Chat() {
   };
 
   const handleToggleTheme = () => {
-      setIsDarkTheme(!isDarkTheme)
-  }
+    setIsDarkTheme(!isDarkTheme);
+  };
   return (
     <div className="flex flex-col md:flex-row h-screen">
-      <div className="flex flex-col items-center flex-shrink-0 bg-slate-50 md:w-1/4 md:h-screen overflow-y-auto rounded-md shadow-lg">
+      <div
+        className={`flex flex-col items-center flex-shrink-0 ${
+          isDarkTheme ? "bg-gray-800" : "bg-slate-50"
+        } ${
+          isDarkTheme ? "text-white" : "text-slate-800"
+        } md:w-1/4 md:h-screen overflow-y-auto rounded-md shadow-lg`}
+      >
         <div className="overflow-auto  w-full">
           {users &&
             users.map((user, id) => (
@@ -191,12 +197,19 @@ export default function Chat() {
             <IoMdLogOut size={25} color="black" />
           </button>
           <button onClick={handleToggleTheme}>
-                <MdOutlineDarkMode size={25}/>
+            <MdOutlineDarkMode
+              size={25}
+              color={isDarkTheme ? "white" : "black"}
+            />
           </button>
         </div>
       </div>
 
-      <div className="flex flex-col w-full md:w-3/4 bg-white">
+      <div
+        className={`flex flex-col w-full md:w-3/4 ${
+          isDarkTheme ? "bg-gray-800" : "bg-white-50"
+        }`}
+      >
         <div
           className={`overflow-scroll h-[85%] p-4 relative ${
             loadingMessages ? "opacity-50" : ""
@@ -209,8 +222,16 @@ export default function Chat() {
                   <div
                     className={`flex  justify-between p-4 m-3 rounded-lg shadow-md ${
                       incomingMessage.sender === selectedUser
-                        ? "bg-blue-100 text-blue-900 self-end"
-                        : "bg-gray-100 text-gray-800"
+                        ? `${
+                            isDarkTheme
+                              ? "bg-[#3B3C36] text-white self-end"
+                              : "bg-blue-100 text-blue-900 self-end"
+                          }`
+                        : `${
+                            isDarkTheme
+                              ? "bg-[#3B3C36] text-white"
+                              : "bg-gray-100 text-gray-800"
+                          }`
                     }`}
                   >
                     <div>
