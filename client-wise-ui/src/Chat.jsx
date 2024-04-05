@@ -194,7 +194,10 @@ export default function Chat() {
             onClick={handleLogOut}
             className="text-gray-500 hover:text-gray-700 focus:outline-none"
           >
-            <IoMdLogOut size={25} color="black" />
+            <IoMdLogOut
+              size={25}
+              color={`${isDarkTheme ? "white" : "black"}`}
+            />
           </button>
           <button onClick={handleToggleTheme}>
             <MdOutlineDarkMode
@@ -256,7 +259,9 @@ export default function Chat() {
               type="text"
               value={message}
               placeholder="Enter your message here..."
-              className="flex-grow py-2 px-4 border rounded-full focus:outline-none focus:ring focus:border-indigo-300"
+              className={`flex-grow py-2 px-4 border rounded-full focus:outline-none focus:ring focus:border-indigo-300 ${
+                isDarkTheme ? "bg-[#3B3C36] text-white" : ``
+              }`}
               onChange={(e) => setMessage(e.target.value)}
               disabled={!selectedUser}
             />
