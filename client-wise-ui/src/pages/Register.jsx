@@ -67,7 +67,7 @@ const Register = () => {
         {isRegisterOrLogin === "login" ? (
           <div>
             <button
-              type="submit"
+              type="button"
               className="w-full bg-indigo-500 text-white p-3 rounded-md focus:outline-none"
             >
               Login
