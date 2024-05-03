@@ -8,6 +8,8 @@ import User from "./User";
 import { ThemeContext } from "./context/ThemeContext";
 import { UserContext } from "./context/UserContext";
 import { getTimeAndDate } from "./utils";
+import { FormComponent } from "./components/FormComponent";
+import { MessageComponent } from "./components/MessageComponent";
 
 export default function Chat() {
   const { setUsername, username, id } = useContext(UserContext);
@@ -220,60 +222,24 @@ export default function Chat() {
         >
           {!!selectedUser &&
             uniqueMessages?.map((incomingMessage, id) => (
-              <div key={id}>
-                {incomingMessage.message && (
-                  <div
-                    className={`flex  justify-between p-4 m-3 rounded-lg shadow-md ${
-                      incomingMessage.sender === selectedUser
-                        ? `${
-                            isDarkTheme
-                              ? "bg-[#3B3C36] text-white self-end"
-                              : "bg-blue-100 text-blue-900 self-end"
-                          }`
-                        : `${
-                            isDarkTheme
-                              ? "bg-[#3B3C36] text-white"
-                              : "bg-gray-100 text-gray-800"
-                          }`
-                    }`}
-                  >
-                    <div>
-                      <p className="text-sm font-semibold">
-                        {incomingMessage.sender === selectedUser
-                          ? selectedUsername
-                          : username}
-                      </p>
-                      <p className="text-base">{incomingMessage.message}</p>
-                    </div>
-                    <p className="text-xs italic">
-                      {getTimeAndDate(incomingMessage.createdAt)}
-                    </p>
-                  </div>
-                )}
-              </div>
+              <MessageComponent
+                isDarkTheme={isDarkTheme}
+                selectedUser={selectedUser}
+                getTimeAndDate={getTimeAndDate}
+                incomingMessage={incomingMessage}
+                selectedUsername={selectedUsername}
+                id={id}
+                username={username}
+              />
             ))}
         </div>
-        <form onSubmit={handleSubmit} className="p-4">
-          <div className="flex gap-2">
-            <input
-              type="text"
-              value={message}
-              placeholder="Enter your message here..."
-              className={`flex-grow py-2 px-4 border rounded-full focus:outline-none focus:ring focus:border-indigo-300 ${
-                isDarkTheme ? "bg-[#3B3C36] text-white" : ``
-              }`}
-              onChange={(e) => setMessage(e.target.value)}
-              disabled={!selectedUser}
-            />
-            <button
-              className="rounded-full bg-blue-500 text-white p-2"
-              type="submit"
-              disabled={!selectedUser}
-            >
-              <IoIosSend size={25} />
-            </button>
-          </div>
-        </form>
+        <FormComponent
+          handleSubmit={handleSubmit}
+          message={message}
+          isDarkTheme={isDarkTheme}
+          selectedUser={selectedUser}
+          setMessage={setMessage}
+        />
       </div>
     </div>
   );

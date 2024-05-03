@@ -67,7 +67,7 @@ const Register = () => {
         {isRegisterOrLogin === "login" ? (
           <div>
             <button
-              type="button"
+              type="submit"
               className="w-full bg-indigo-500 text-white p-3 rounded-md focus:outline-none"
             >
               Login
@@ -75,7 +75,7 @@ const Register = () => {
             <p className="mt-4 text-gray-600 text-center">
               Not a user yet?{" "}
               <button
-                type="button"
+                type="submit"
                 className="text-indigo-500 underline hover:text-indigo-600 focus:outline-none"
                 onClick={() => setIsRegisterOrLogin("register")}
               >
@@ -94,7 +94,7 @@ const Register = () => {
             <p className="mt-4 text-gray-600 text-center">
               Already a user?{" "}
               <button
-                type="button"
+                type="submit"
                 className="text-indigo-500 underline hover:text-indigo-600 focus:outline-none"
                 onClick={() => setIsRegisterOrLogin("login")}
               >
