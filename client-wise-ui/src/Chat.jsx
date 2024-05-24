@@ -10,6 +10,8 @@ import { UserContext } from "./context/UserContext";
 import { getTimeAndDate } from "./utils";
 import { FormComponent } from "./components/FormComponent";
 import { MessageComponent } from "./components/MessageComponent";
+import { jwtDecode } from "jwt-decode";
+import Swal from "sweetalert2";
 
 export default function Chat() {
   const { setUsername, username, id } = useContext(UserContext);
@@ -29,6 +31,39 @@ export default function Chat() {
   }, [messages]);
 
   const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    isTokenExpired() ? showLogoutAlert() : null;
+  }, []);
+
+  const isTokenExpired = () => {
+    const tokenInLocalStorage = localStorage.getItem("token");
+    console.log(tokenInLocalStorage);
+    const decodedToken = jwtDecode(tokenInLocalStorage);
+    console.log(decodedToken);
+    const { exp } = decodedToken;
+    const tokenExpiration = getTimeAndDate(exp);
+    if (exp < Date.now() / 100) {
+      console.log(`your token has expired, exp: ${tokenExpiration}`);
+      return true;
+    }
+    return false;
+  };
+
+  const showLogoutAlert = () => {
+    Swal.fire({
+      title: "Your Token Has Expired, Would You Like To Log?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Log Out",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Perform the log out operation
+        handleLogOut();
+      }
+    });
+  };
 
   useEffect(() => {
     if (selectedUser && selectedUser.trim() !== "") {
@@ -123,7 +158,7 @@ export default function Chat() {
   };
 
   const handleLogOut = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     axios
       .post("http://localhost:8080/auth/logout")
       .then((res) => {

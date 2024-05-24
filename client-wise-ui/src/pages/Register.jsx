@@ -1,6 +1,8 @@
 import { useContext, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
+import { jwtDecode } from "jwt-decode";
+import { getTimeAndDate } from "../utils";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -18,7 +20,9 @@ const Register = () => {
       password,
     });
     if (data) {
-      console.log(data);
+      const tokenDateTime = jwtDecode(data.jwt);
+      console.log(getTimeAndDate(tokenDateTime.exp));
+      alert(`stop`);
       localStorage.setItem("token", data.jwt);
       localStorage.setItem("username", JSON.stringify(username));
       localStorage.setItem("id", JSON.stringify(data._id));
