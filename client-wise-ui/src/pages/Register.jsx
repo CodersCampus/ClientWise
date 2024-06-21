@@ -1,9 +1,7 @@
 import { useContext, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
-import { jwtDecode } from "jwt-decode";
-import { getTimeAndDate } from "../utils";
-
+import { jwtDecode } from 'jwt-decode'
 const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -20,9 +18,25 @@ const Register = () => {
       password,
     });
     if (data) {
-      const tokenDateTime = jwtDecode(data.jwt);
-      console.log(getTimeAndDate(tokenDateTime.exp));
-      alert(`stop`);
+      console.log(data.jwt)
+      try {
+        const decodedToken = jwtDecode(data.jwt)
+        console.log("Decoded Token:" + JSON.stringify(decodedToken))
+        console.log("Time in currentmilis: " + Date.now());
+        console.log("isTokenExpired: " + decodedToken < Date.now())
+
+        const {exp} = decodedToken;
+
+
+        if (exp <= Date.now()) {
+          localStorage.setItem("isTokenExpired", false)
+        } else {
+          localStorage.setItem("isTokenExpired", true)
+
+        }
+      }catch(error) {
+        console.error("Invaldi token", error)
+      }
       localStorage.setItem("token", data.jwt);
       localStorage.setItem("username", JSON.stringify(username));
       localStorage.setItem("id", JSON.stringify(data._id));

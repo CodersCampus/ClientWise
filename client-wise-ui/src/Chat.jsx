@@ -10,9 +10,8 @@ import { UserContext } from "./context/UserContext";
 import { getTimeAndDate } from "./utils";
 import { FormComponent } from "./components/FormComponent";
 import { MessageComponent } from "./components/MessageComponent";
-import { jwtDecode } from "jwt-decode";
 import Swal from "sweetalert2";
-
+import {jwtDecode} from 'jwt-decode'
 export default function Chat() {
   const { setUsername, username, id } = useContext(UserContext);
   const [isConnected, setIsConnected] = useState(false);
@@ -33,22 +32,29 @@ export default function Chat() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    isTokenExpired() ? showLogoutAlert() : null;
+
+    const isTokenExpired = JSON.parse(localStorage.getItem("isTokenExpired"));
+
+   
+
+    console.log("isTokenExpired -> Chat Component " +   typeof(isTokenExpired));
+
+
+    if (isTokenExpired) {
+      showLogoutAlert()
+    } else {
+      
+    }
   }, []);
 
-  const isTokenExpired = () => {
-    const tokenInLocalStorage = localStorage.getItem("token");
-    console.log(tokenInLocalStorage);
-    const decodedToken = jwtDecode(tokenInLocalStorage);
-    console.log(decodedToken);
-    const { exp } = decodedToken;
-    const tokenExpiration = getTimeAndDate(exp);
-    if (exp < Date.now() / 100) {
-      console.log(`your token has expired, exp: ${tokenExpiration}`);
-      return true;
-    }
-    return false;
-  };
+  // const isTokenExpired = () => {
+  //   const tokenInLocalStorage = localStorage.getItem("token");
+  //   if (exp < Date.now() / 100) {
+  //     console.log(`your token has expired, exp: ${tokenExpiration}`);
+  //     return true;
+  //   }
+  //   return false;
+  // };
 
   const showLogoutAlert = () => {
     Swal.fire({
