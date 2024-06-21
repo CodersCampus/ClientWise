@@ -18,16 +18,16 @@ export const UserContextProvider = ({ children }) => {
       setUsername(JSON.parse(localStorage.getItem("username")));
       setId(JSON.parse(localStorage.getItem("id")));
     }
-    axios
-      .get("http://localhost:3001/account")
-      .then(({ data }) => {
-        setUsername(data.username);
+    // axios
+    //   .get("http://localhost:3001/account")
+    //   .then(({ data }) => {
+    //     setUsername(data.username);
 
-        setId(data.userId);
-      }, [])
-      .catch((error) => {
-        console.log(error);
-      });
+    //     setId(data.userId);
+    //   }, [])
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   }, []);
   return (
     <UserContext.Provider

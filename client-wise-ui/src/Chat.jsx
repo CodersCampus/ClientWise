@@ -34,31 +34,16 @@ export default function Chat() {
   useEffect(() => {
 
     const isTokenExpired = JSON.parse(localStorage.getItem("isTokenExpired"));
-
-   
-
-    console.log("isTokenExpired -> Chat Component " +   typeof(isTokenExpired));
-
-
     if (isTokenExpired) {
-      showLogoutAlert()
-    } else {
-      
-    }
+        showLogoutAlert()
+    } 
   }, []);
 
-  // const isTokenExpired = () => {
-  //   const tokenInLocalStorage = localStorage.getItem("token");
-  //   if (exp < Date.now() / 100) {
-  //     console.log(`your token has expired, exp: ${tokenExpiration}`);
-  //     return true;
-  //   }
-  //   return false;
-  // };
+
 
   const showLogoutAlert = () => {
     Swal.fire({
-      title: "Your Token Has Expired, Would You Like To Log?",
+      title: "Your Token Has Expired, Would You Like To Log Out?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Log Out",
