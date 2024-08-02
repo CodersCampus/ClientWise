@@ -6,7 +6,7 @@ import { useContext } from "react";
 function App() {
   const { isDarkTheme } = useContext(ThemeContext);
 
-  axios.defaults.baseURL = "http://localhost:8080";
+  axios.defaults.baseURL = "https://chat-api-spring-boot-production.up.railway.app";
   axios.defaults.withCredentials = true;
   return (
     <div className={`${isDarkTheme ? "bg-gray-800" : ""}`}>

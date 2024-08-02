@@ -81,7 +81,7 @@ export default function Chat() {
   function initWebSocket() {
     if (!webSocket) {
       console.log("Creating a new WebSocket connection...");
-      const ws = new WebSocket("ws://localhost:8080/websocket");
+      const ws = new WebSocket("wss://chat-api-spring-boot-production.up.railway.app/websocket");
       setIsConnected(true);
       setWebSocket(ws);
       ws.addEventListener("message", handleMessage);
@@ -94,7 +94,7 @@ export default function Chat() {
       setLoadingMessages(true);
 
       axios
-        .get("http://localhost:8080/messages/" + selectedUser)
+        .get("https://chat-api-spring-boot-production.up.railway.app/messages/" + selectedUser)
         .then((res) => {
           const messagesFromDb = res.data;
           console.log(messagesFromDb);
@@ -151,7 +151,7 @@ export default function Chat() {
   const handleLogOut = (e) => {
     // e.preventDefault();
     axios
-      .post("http://localhost:8080/auth/logout")
+      .post("https://chat-api-spring-boot-production.up.railway.app/auth/logout")
       .then((res) => {
         setUsername("");
       })

@@ -691,7 +691,7 @@ export default function Chat() {
 <span class="cstat-no" title="statement not covered" >      setLoadingMessages(true);</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      axios</span>
-        .get("http://localhost:8080/messages/" + selectedUser)
+        .get("https://chat-api-spring-boot-production.up.railway.app/messages/" + selectedUser)
         .then(<span class="fstat-no" title="function not covered" >(r</span>es) =&gt; {
           const messagesFromDb = <span class="cstat-no" title="statement not covered" >res.data;</span>
 <span class="cstat-no" title="statement not covered" >          console.log(messagesFromDb);</span>
@@ -748,7 +748,7 @@ export default function Chat() {
   const handleLogOut = <span class="fstat-no" title="function not covered" >(e</span>) =&gt; {
 <span class="cstat-no" title="statement not covered" >    e.preventDefault();</span>
 <span class="cstat-no" title="statement not covered" >    axios</span>
-      .post("http://localhost:8080/auth/logout")
+      .post("https://chat-api-spring-boot-production.up.railway.app/auth/logout")
       .then(<span class="fstat-no" title="function not covered" >(r</span>es) =&gt; {
 <span class="cstat-no" title="statement not covered" >        setUsername("");</span>
       })

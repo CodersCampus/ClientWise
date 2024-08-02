@@ -298,8 +298,8 @@ const Register = () =&gt; {
     e.preventDefault();
     let url =
       isRegisterOrLogin === "register"
-        ? `http://localhost:8080/auth/signup`
-        : <span class="branch-1 cbranch-no" title="branch not covered" >"http://localhost:8080/auth/signin";</span>
+        ? `https://chat-api-spring-boot-production.up.railway.app/auth/signup`
+        : <span class="branch-1 cbranch-no" title="branch not covered" >"https://chat-api-spring-boot-production.up.railway.app/auth/signin";</span>
     const { data } = await axios.post(url, {
       username,
       password,

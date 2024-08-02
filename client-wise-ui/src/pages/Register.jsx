@@ -11,8 +11,8 @@ const Register = () => {
     e.preventDefault();
     let url =
       isRegisterOrLogin === "register"
-        ? `http://localhost:8080/auth/signup`
-        : "http://localhost:8080/auth/signin";
+        ? `https://chat-api-spring-boot-production.up.railway.app/auth/signup`
+        : "https://chat-api-spring-boot-production.up.railway.app/auth/signin";
     const { data } = await axios.post(url, {
       username,
       password,
