@@ -5,6 +5,10 @@ import { jwtDecode } from 'jwt-decode'
 const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+
+
+
   const [isRegisterOrLogin, setIsRegisterOrLogin] = useState("register");
   const { setUsername: setContextUsername, setId } = useContext(UserContext);
   const submitUserLogin = async (e) => {
@@ -13,6 +17,12 @@ const Register = () => {
       isRegisterOrLogin === "register"
         ? `https://chat-api-spring-boot-production.up.railway.app/auth/signup`
         : "https://chat-api-spring-boot-production.up.railway.app/auth/signin";
+
+
+
+        // If ;invalid return the result
+
+        if (username === "" || password === "") return;
     const { data } = await axios.post(url, {
       username,
       password,
@@ -21,9 +31,7 @@ const Register = () => {
       console.log(data.jwt)
       try {
         const decodedToken = jwtDecode(data.jwt)
-        console.log("Decoded Token:" + JSON.stringify(decodedToken))
-        console.log("Time in currentmilis: " + Date.now());
-        console.log("isTokenExpired: " + decodedToken < Date.now())
+       
 
         const {exp} = decodedToken;
 
