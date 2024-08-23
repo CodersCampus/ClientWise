@@ -11,7 +11,9 @@ import { getTimeAndDate } from "./utils";
 import { FormComponent } from "./components/FormComponent";
 import { MessageComponent } from "./components/MessageComponent";
 import Swal from "sweetalert2";
-import {jwtDecode} from 'jwt-decode'
+import { RiAccountCircleFill } from "react-icons/ri";
+import { jwtDecode } from "jwt-decode";
+import { Account } from "./pages/Account";
 export default function Chat() {
   const { setUsername, username, id } = useContext(UserContext);
   const [isConnected, setIsConnected] = useState(false);
@@ -32,14 +34,11 @@ export default function Chat() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-
     const isTokenExpired = JSON.parse(localStorage.getItem("isTokenExpired"));
     if (isTokenExpired) {
-        showLogoutAlert()
-    } 
+      showLogoutAlert();
+    }
   }, []);
-
-
 
   const showLogoutAlert = () => {
     Swal.fire({
@@ -81,7 +80,9 @@ export default function Chat() {
   function initWebSocket() {
     if (!webSocket) {
       console.log("Creating a new WebSocket connection...");
-      const ws = new WebSocket("wss://chat-api-spring-boot-production.up.railway.app/websocket");
+      const ws = new WebSocket(
+        "wss://chat-api-spring-boot-production.up.railway.app/websocket"
+      );
       setIsConnected(true);
       setWebSocket(ws);
       ws.addEventListener("message", handleMessage);
@@ -94,7 +95,10 @@ export default function Chat() {
       setLoadingMessages(true);
 
       axios
-        .get("https://chat-api-spring-boot-production.up.railway.app/messages/" + selectedUser)
+        .get(
+          "https://chat-api-spring-boot-production.up.railway.app/messages/" +
+            selectedUser
+        )
         .then((res) => {
           const messagesFromDb = res.data;
           console.log(messagesFromDb);
@@ -151,7 +155,9 @@ export default function Chat() {
   const handleLogOut = (e) => {
     // e.preventDefault();
     axios
-      .post("https://chat-api-spring-boot-production.up.railway.app/auth/logout")
+      .post(
+        "https://chat-api-spring-boot-production.up.railway.app/auth/logout"
+      )
       .then((res) => {
         setUsername("");
       })
@@ -170,6 +176,11 @@ export default function Chat() {
 
   const handleToggleTheme = () => {
     setIsDarkTheme(!isDarkTheme);
+  };
+
+  const handleAccountComponent = () => {
+    console.log("handleAccountComponent is called *****");
+    return <Account />;
   };
   return (
     <div className="flex flex-col md:flex-row h-screen">
@@ -232,6 +243,9 @@ export default function Chat() {
               size={25}
               color={isDarkTheme ? "white" : "black"}
             />
+          </button>
+          <button onClick={handleAccountComponent}>
+            <RiAccountCircleFill size={25} />
           </button>
         </div>
       </div>
