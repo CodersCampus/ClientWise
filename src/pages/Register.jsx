@@ -1,13 +1,10 @@
 import { useContext, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
-import { jwtDecode } from 'jwt-decode'
+import { jwtDecode } from "jwt-decode";
 const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-
-
 
   const [isRegisterOrLogin, setIsRegisterOrLogin] = useState("register");
   const { setUsername: setContextUsername, setId } = useContext(UserContext);
@@ -15,35 +12,30 @@ const Register = () => {
     e.preventDefault();
     let url =
       isRegisterOrLogin === "register"
-        ? `https://chat-api-spring-boot-production.up.railway.app/auth/signup`
-        : "https://chat-api-spring-boot-production.up.railway.app/auth/signin";
+        ? `http://localhost:8080/auth/signup`
+        : `http://localhost:8080/auth/signin`;
 
+    // If ;invalid return the result
 
-
-        // If ;invalid return the result
-
-        if (username === "" || password === "") return;
+    if (username === "" || password === "") return;
     const { data } = await axios.post(url, {
       username,
       password,
     });
     if (data) {
-      console.log(data.jwt)
+      console.log(data.jwt);
       try {
-        const decodedToken = jwtDecode(data.jwt)
-       
+        const decodedToken = jwtDecode(data.jwt);
 
-        const {exp} = decodedToken;
-
+        const { exp } = decodedToken;
 
         if (exp <= Date.now()) {
-          localStorage.setItem("isTokenExpired", false)
+          localStorage.setItem("isTokenExpired", false);
         } else {
-          localStorage.setItem("isTokenExpired", true)
-
+          localStorage.setItem("isTokenExpired", true);
         }
-      }catch(error) {
-        console.error("Invaldi token", error)
+      } catch (error) {
+        console.error("Invaldi token", error);
       }
       localStorage.setItem("token", data.jwt);
       localStorage.setItem("username", JSON.stringify(username));
