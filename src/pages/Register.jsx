@@ -26,6 +26,8 @@ const Register = () => {
       console.log(data.jwt);
       try {
         const decodedToken = jwtDecode(data.jwt);
+        console.log(decodedToken);
+        localStorage.setItem("userInformation", JSON.stringify(decodedToken));
 
         const { exp } = decodedToken;
 

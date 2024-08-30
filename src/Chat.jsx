@@ -14,6 +14,7 @@ import Swal from "sweetalert2";
 import { RiAccountCircleFill } from "react-icons/ri";
 import { jwtDecode } from "jwt-decode";
 import { Account } from "./pages/Account";
+import { Navigate, NavLink, useNavigate } from "react-router-dom";
 export default function Chat() {
   const { setUsername, username, id } = useContext(UserContext);
   const [isConnected, setIsConnected] = useState(false);
@@ -26,6 +27,7 @@ export default function Chat() {
   const [isSessionExpired, setIsSessionExpired] = useState(false);
   const [loadingMessages, setLoadingMessages] = useState(false);
   const { isDarkTheme, setIsDarkTheme } = useContext(ThemeContext);
+  const navigate = useNavigate();
 
   const uniqueMessages = useMemo(() => {
     return [...new Set(messages.map(JSON.stringify))].map(JSON.parse);
@@ -81,7 +83,9 @@ export default function Chat() {
     if (!webSocket) {
       console.log("Creating a new WebSocket connection...");
       const ws = new WebSocket(
-        "wss://chat-api-spring-boot-production.up.railway.app/websocket"
+        // "wss://chat-api-spring-boot-production.up.railway.app/websocket"
+        
+        "wss://localhost:8080/websocket"
       );
       setIsConnected(true);
       setWebSocket(ws);
@@ -96,8 +100,10 @@ export default function Chat() {
 
       axios
         .get(
-          "https://chat-api-spring-boot-production.up.railway.app/messages/" +
-            selectedUser
+          // "https://chat-api-spring-boot-production.up.railway.app/messages/" +
+          //   selectedUser
+
+          "/messages/"+selectedUser
         )
         .then((res) => {
           const messagesFromDb = res.data;
@@ -156,7 +162,8 @@ export default function Chat() {
     // e.preventDefault();
     axios
       .post(
-        "https://chat-api-spring-boot-production.up.railway.app/auth/logout"
+        // "https://chat-api-spring-boot-production.up.railway.app/auth/logout"
+        "localhost:8080/auth/logout"
       )
       .then((res) => {
         setUsername("");
@@ -178,10 +185,10 @@ export default function Chat() {
     setIsDarkTheme(!isDarkTheme);
   };
 
-  const handleAccountComponent = () => {
-    console.log("handleAccountComponent is called *****");
-    return <Account />;
-  };
+  const handleAccountComponent = () => navigate("/account");
+  
+
+
   return (
     <div className="flex flex-col md:flex-row h-screen">
       <div

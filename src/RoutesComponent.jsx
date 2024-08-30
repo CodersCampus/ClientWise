@@ -6,7 +6,7 @@ import Register from "./pages/Register";
 import Chat from "./Chat";
 import Logo from "./assets/coders-campus-logo.svg";
 
-export const Routes = () => {
+export const RoutesComponent = () => {
   const { username, token } = useContext(UserContext);
   const { isDarkTheme } = useContext(ThemeContext);
 
